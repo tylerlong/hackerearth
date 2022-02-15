@@ -22,7 +22,7 @@ def attacked(r, c):
         return True
     return False
 
-def n_queues(q):
+def n_queens(q):
     # first round
     for r in range(n):
         for c in range(n):
@@ -51,7 +51,7 @@ def n_queues(q):
     return False
 
 
-if n_queues(n):
+if n_queens(n):
     print('YES')
     print_board()
 else:

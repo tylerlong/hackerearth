@@ -19,7 +19,7 @@ def attacked(r, c):
                     return True
     return False
 
-def n_queues(q, r0 = 0, c0 = 0):
+def n_queens(q, r0 = 0, c0 = 0):
     if q == 0:
         return True
     for r in range(r0, n):
@@ -29,12 +29,12 @@ def n_queues(q, r0 = 0, c0 = 0):
             if attacked(r, c):
                 continue
             board[r][c] = 1
-            if n_queues(q - 1, r, c):
+            if n_queens(q - 1, r, c):
                 return True
             board[r][c] = 0
     return False
 
-if n_queues(n):
+if n_queens(n):
     print('YES')
     print_board()
 else:
