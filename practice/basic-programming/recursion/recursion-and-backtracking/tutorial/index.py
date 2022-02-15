@@ -1,41 +1,41 @@
 n = int(input())
-board = [[0 for c in range(n)] for r in range(n)]
+board = [[0 for _ in range(n)] for _ in range(n)]
 
 def print_board():
     for r in board:
         print(' '.join(str(c) for c in r))
 
-def attacked(r, c, board):
+def attacked(r, c):
     for r1 in range(n):
         for c1 in range(n):
             if board[r1][c1] == 1:
-                if r1 == r:
+                if r == r1:
                     return True
-                if c1 == c:
+                if c == c1:
                     return True
-                if c1 + r1 == c + r:
+                if r + c == r1 + c1:
                     return True
-                if c1 - r1 == c - r:
+                if r - c == r1 - c1:
                     return True
     return False
 
-def n_queues(board, n, r0 = -1, c0 = -1):
-    if n == 0:
-        return board
-    for r in range(len(board)):
-        for c in range(len(board)):
-            if r < r0 or (r == r0 and c <= c0):
+def n_queues(q, r0 = 0, c0 = 0):
+    if q == 0:
+        return True
+    for r in range(r0, n):
+        for c in range(n):
+            if r == r0 and c < c0:
                 continue
-            if attacked(r, c, board):
+            if attacked(r, c):
                 continue
             board[r][c] = 1
-            if n_queues(board, n - 1, r, c) != False:
-                return board
+            if n_queues(q - 1, r, c):
+                return True
             board[r][c] = 0
     return False
 
-if n_queues(board, n) == False:
-    print('NO')
-else:
+if n_queues(n):
     print('YES')
     print_board()
+else:
+    print('NO')
