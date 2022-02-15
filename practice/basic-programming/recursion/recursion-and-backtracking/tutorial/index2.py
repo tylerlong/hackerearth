@@ -1,6 +1,3 @@
-from inspect import stack
-
-
 n = int(input())
 board = [[0 for _ in range(n)] for _ in range(n)]
 
@@ -37,7 +34,8 @@ def n_queues(q):
                     return True
 
     while len(stack) > 0:
-        (r0, c0) = stack.pop() # pop and try the next position of it
+        # pop and try the next position of it
+        (r0, c0) = stack.pop()
         board[r0][c0] = 0
         q += 1
         for r in range(r0, n):
