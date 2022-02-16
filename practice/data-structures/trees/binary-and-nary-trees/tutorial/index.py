@@ -2,39 +2,43 @@ import sys
 from collections import deque
 
 class Node:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self):
         self.left = None
         self.right = None
-def printTree(node, level=0):
-    if node != None:
-        printTree(node.right, level + 1)
-        print('\t' * level + '|=====> ' + node.data)
-        printTree(node.left, level + 1)
 
 lines = deque(line.strip() for line in sys.stdin)
 
-(n, data) = lines.popleft().split(' ')
+(n, _) = lines.popleft().split(' ')
 
-root = Node(data)
+root = Node()
 
 while len(lines) > 0:
     path_str = lines.popleft()
     data = lines.popleft()
     node = root
-    for c in path_str[:-1]:
+    for c in path_str:
         if c == 'L':
+            if node.left == None:
+                node.left = Node()
             node = node.left
         elif c == 'R':
+            if node.right == None:
+                node.right = Node()
             node = node.right
-    if path_str[-1] == 'L':
-        node.left = Node(data)
-    elif path_str[-1] == 'R':
-        node.right = Node(data)
 
-printTree(root)
+def height(node):
+    if node == None:
+        return 0
+    return 1 + max(height(node.left), height(node.right))
 
 
 def diameter(root):
-    pass
-    # todo
+    if root == None:
+        return 0
+    return max(
+        diameter(root.left), 
+        diameter(root.right), 
+        height(root.left) + 1 + height(root.right)
+    )
+
+print(diameter(root))
