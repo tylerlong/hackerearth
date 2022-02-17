@@ -41,10 +41,10 @@ def find_node(node: Optional[Node], data: int) -> Optional[Node]:
         return node
     return find_node(node.left, data) or find_node(node.right, data)
 
-def output_node(node: Optional[Node]) -> None:
+def traverse_node(node: Optional[Node]) -> None:
     if node == None:
         return
     print(node.data)
-    output_node(node.left)
-    output_node(node.right)
-output_node(find_node(root, query))
+    traverse_node(node.left)
+    traverse_node(node.right)
+traverse_node(find_node(root, query))
