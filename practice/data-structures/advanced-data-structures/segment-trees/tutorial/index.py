@@ -2,8 +2,8 @@ from collections import deque
 import sys
 
 inputs = deque(line.strip() for line in sys.stdin)
-(n, q) = (int(i) for i in inputs.popleft().split(' '))
-l = [int(i) for i in inputs.popleft().split(' ')]
+inputs.popleft()
+arr = [int(i) for i in inputs.popleft().split(' ')]
 
 class Node:
     def __init__(self, start: int, end: int) -> None:
@@ -11,7 +11,7 @@ class Node:
         self.end = end
         self.mid = (start + end) // 2
         if end - start == 1:
-            self.data = l[start]
+            self.data = arr[start]
         else:
             self.left = Node(start, self.mid)
             self.right = Node(self.mid, end)
@@ -34,12 +34,12 @@ class Node:
             return self.left.query(start, end)
         return min(self.left.query(start, self.mid), self.right.query(self.mid, end))
 
-root = Node(0, n)
+root = Node(0, len(arr))
 
 while len(inputs) > 0:
     line = inputs.popleft()
-    (start, end) = (int(i) for i in line[2:].split(' '))
-    if line.startswith('q'):
-        print(root.query(start - 1, end))
-    elif line.startswith('u'):
-        root.update(start - 1, end)
+    (i, j) = (int(i) for i in line[2:].split(' '))
+    if line.startswith('u '):
+        root.update(i - 1, j)
+    elif line.startswith('q '):
+        print(root.query(i - 1, j))
