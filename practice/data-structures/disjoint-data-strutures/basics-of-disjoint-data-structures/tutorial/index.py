@@ -11,11 +11,12 @@ for line in inputs[1:]:
   for k in smaller:
     bigger.append(k)
     map[k] = bigger
-  checked = set()
   result = []
-  for k in map:
-    if(id(map[k]) in checked):
-      continue
-    result.append(len(map[k]))
-    checked.add(id(map[k]))
+  keys = set(map.keys())
+  while len(keys) > 0:
+    key = keys.pop()
+    result.append(len(map[key]))
+    for k in map[key]:
+      if k in keys:
+        keys.remove(k)
   print(' '.join([str(i) for i in sorted(result)]))
